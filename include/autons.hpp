@@ -8,3 +8,4 @@ extern Drive chassis;
 
 void default_constants();
 void red_right();
+void red_left();

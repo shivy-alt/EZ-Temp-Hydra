@@ -11,6 +11,7 @@ inline pros::Motor intake1(20,pros::MotorGearset::blue);
 inline pros::Motor intake2(12,pros::MotorGearset::blue);
 inline pros::adi::DigitalOut mogo_clamp(8);
 inline pros::Controller control(pros::E_CONTROLLER_MASTER);
+inline pros::adi::DigitalOut hang(1);
 
 // Chassis constructor
 // Chassis constructor
@@ -50,6 +51,7 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       Auton("Red Right",red_right),
+      Auton("Red Left",red_left),
   });
 
   // Initialize chassis and auton selector
@@ -127,7 +129,7 @@ void opcontrol() {
       //  When enabled:
       //  * use A and Y to increment / decrement the constants
       //  * use the arrow keys to navigate the constants
-      if (master.get_digital_new_press(DIGITAL_X))
+      if (master.get_digital_new_press(DIGITAL_LEFT))
         chassis.pid_tuner_toggle();
 
       // Trigger the selected autonomous routine
@@ -149,16 +151,17 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
     if(control.get_digital(DIGITAL_R2)){
-      intake1.move(-108);
-      intake2.move(108);
+      intake1.move(-114);
+      intake2.move(114);
     } else if(control.get_digital(DIGITAL_R1)){
-      intake1.move(108);
-      intake2.move(-108);
+      intake1.move(114);
+      intake2.move(-114);
     } else{
       intake1.move(0);
       intake2.move(0);
     }
    static bool  hi= false;
+   static bool hello= false;
     
     if(control.get_digital_new_press(DIGITAL_Y)){
       hi=!hi;
@@ -166,6 +169,11 @@ void opcontrol() {
    
     }
     
+    if(control.get_digital_new_press(DIGITAL_X)){
+      hello=!hello;
+      hang.set_value(hello);
+      
+    }
 
 
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME

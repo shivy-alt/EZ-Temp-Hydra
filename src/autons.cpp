@@ -75,6 +75,11 @@ void red_right(){
   chassis.pid_drive_set(tile_length*1.61,100,true);
 
 }
+void red_left(){
+  chassis.pid_drive_set(tile_length,120,true);
+ 
+}
+
 void goal_rush_red(){
   mogo_clamp.set_value(false);
 
