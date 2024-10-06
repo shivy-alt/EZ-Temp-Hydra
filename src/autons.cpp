@@ -5,6 +5,15 @@ inline pros::Motor intake1(20,pros::MotorGearset::blue);
 inline pros::Motor intake2(12,pros::MotorGearset::blue);
 inline pros::adi::DigitalOut mogo_clamp(8);
 
+void intake_on(){
+  intake1.move(-120);
+  intake2.move(120);
+}
+void intake_off(){
+  intake1.move(0);
+  intake2.move(0);
+}
+
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -147,7 +156,9 @@ void auton_skills(){
 }
 
 void corner_clear(){
-
+  intake_on();
+  pros::delay(500);
+  intake_off();
 }
 
 void solo_winpoint(){
