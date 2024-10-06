@@ -159,10 +159,7 @@ void corner_clear(){
   intake_on();
   pros::delay(500);
   intake_off();
-void corner_clear();
-
 }
-
 void solo_winpoint(){
 
 }
