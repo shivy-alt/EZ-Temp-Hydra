@@ -44,47 +44,112 @@ void default_constants() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
-void red_right(){
+void Four_Ring_Auto(){
 
-  chassis.pid_drive_set(-1.33*tile_length,100,true);
-  
-  pros::delay(1050);
+  chassis.pid_drive_set(-0.8*tile_length,120,true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(-30.5,127,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-0.5*tile_length,100,true);
+  chassis.pid_wait();
   mogo_clamp.set_value(true);
-
-  //intaking the preloading ring onto the mogo
-  pros::delay(250);
+  pros::delay(500);
   intake1.move(-120);
   intake2.move(120);
   pros::delay(1000);
   intake1.move(0);
   intake2.move(0);
 
-  //going to intake the red ring in the first stack
-  chassis.pid_turn_set(80,127,true);
-  pros::delay(250);
-  chassis.pid_drive_set(0.83*tile_length,90,true);
-  intake1.move(-115);
-  intake2.move(115);
-  pros::delay(2500);
+  chassis.pid_turn_set(-105,120,true);
+  chassis.pid_wait();
+  intake1.move(-120);
+  intake2.move(120);
+  pros::delay(100);
+  chassis.pid_wait();
+  pros::delay(300);
+  chassis.pid_drive_set(0.85*tile_length,90,true);
+  chassis.pid_wait();
+  pros::delay(300);
+  chassis.pid_drive_set(-0.5*tile_length,30,true);
+  chassis.pid_wait();
+
+  pros::delay(1500);
   intake1.move(0);
   intake2.move(0);
   pros::delay(500);
+
+  //add other two rings + ladder contact
+
   
-  //going to touch ladder
-  chassis.pid_turn_set(220,127,true);
-  chassis.pid_drive_set(tile_length*1.61,100,true);
+
+
 
 }
-void red_left(){
-  chassis.pid_drive_set(tile_length,120,true);
+void Two_Ring_Auto(){
+  chassis.pid_drive_set(-0.8*tile_length,120,true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(30.5,127,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-0.5*tile_length,100,true);
+  chassis.pid_wait();
+  mogo_clamp.set_value(true);
+  pros::delay(500);
+  intake1.move(-120);
+  intake2.move(120);
+  pros::delay(1000);
+  intake1.move(0);
+  intake2.move(0);
+
+  chassis.pid_turn_set(105,120,true);
+  chassis.pid_wait();
+  intake1.move(-120);
+  intake2.move(120);
+  pros::delay(100);
+  chassis.pid_wait();
+  pros::delay(300);
+  chassis.pid_drive_set(0.85*tile_length,90,true);
+  chassis.pid_wait();
+  pros::delay(300);
+  chassis.pid_drive_set(-0.5*tile_length,60,true);
+  chassis.pid_wait();
+
+  pros::delay(1000);
+  intake1.move(0);
+  intake2.move(0);
+  pros::delay(500);
+
+  chassis.pid_turn_set(-240,127,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(1.35*tile_length,90,true);
+  chassis.pid_wait();
+  
+  //add ladder touch for quals; add turn towards far positive for elims
+  
+
  
 }
 
-void goal_rush_red(){
-  mogo_clamp.set_value(false);
 
-  chassis.pid_drive_set(-2*tile_length,110,true);
-  pros::delay(1000);
-  mogo_clamp.set_value(true);
+
+void auton_skills(){
+    
+  intake1.move(-127);
+  intake2.move(127);
+  pros::delay(500);
+  chassis.pid_turn_set(- 25,127,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(0.5*tile_length,110,true);
+  chassis.pid_wait();
+  pros::delay(750);
+  intake1.move(0);
+  intake2.move(0);
+
 }
 
+void corner_clear(){
+
+}
+
+void solo_winpoint(){
+
+}

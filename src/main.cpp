@@ -50,8 +50,11 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      Auton("Red Right",red_right),
-      Auton("Red Left",red_left),
+      Auton("Auton Skills",auton_skills),
+      Auton("Four Ring Auto",Four_Ring_Auto),
+      Auton("Two Ring Auto",Two_Ring_Auto),
+      Auton("Corner Clear",corner_clear),
+      Auton("Solo Winpoint", solo_winpoint),
   });
 
   // Initialize chassis and auton selector

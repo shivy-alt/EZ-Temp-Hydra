@@ -7,5 +7,8 @@ extern Drive chassis;
 
 
 void default_constants();
-void red_right();
-void red_left();
+void Four_Ring_Auto();
+void Two_Ring_Auto();
+void auton_skills();
+void corner_clear();
+void solo_winpoint();
