@@ -146,10 +146,7 @@ void auton_skills(){
 
 }
 
-void corner_clear(){
-  intake1.move(-127);
-  intake2.move(127);
-  pros::delay(250);
+void corner_clear();
 
 }
 
