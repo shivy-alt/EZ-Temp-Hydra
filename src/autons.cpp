@@ -14,6 +14,13 @@ void intake_off(){
   intake2.move(0);
 }
 
+void corner_ram(){
+  chassis.pid_drive_set(0.1*tile_length,127,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-0.1*tile_length,127,true);
+  chassis.pid_wait();
+}
+
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -159,6 +166,25 @@ void corner_clear(){
   intake_on();
   pros::delay(500);
   intake_off();
+
+  chassis.pid_turn_set(90,127,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(2.5*tile_length,115,true);
+  chassis.pid_wait();
+  intake_on();
+  pros::delay(500);
+  corner_ram();
+  pros::delay(250);
+  chassis.pid_turn_set(-10,127,true);
+  chassis.pid_wait();
+  corner_ram();
+  pros::delay(250);
+  chassis.pid_turn_set(-5,127,true);
+  chassis.pid_wait();
+  corner_ram();
+
+  pros::delay(250);
+
 }
 void solo_winpoint(){
 
