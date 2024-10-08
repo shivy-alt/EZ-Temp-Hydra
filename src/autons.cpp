@@ -21,6 +21,13 @@ void corner_ram(){
   chassis.pid_wait();
 }
 
+void intake_reverse(){
+  intake1.move(127);
+  intake2.move(-127);
+}
+
+
+
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
@@ -163,14 +170,20 @@ void auton_skills(){
 }
 
 void corner_clear(){
+  //scoring preload onto alliance stake
   intake_on();
   pros::delay(500);
   intake_off();
 
-  chassis.pid_turn_set(90,127,true);
+  //turning towards the positive corner
+  chassis.pid_turn_set(-90,127,true);
   chassis.pid_wait();
+
+  //driving towards positive corner
   chassis.pid_drive_set(2.5*tile_length,115,true);
   chassis.pid_wait();
+
+  //ramming into corner to clear it
   intake_on();
   pros::delay(500);
   corner_ram();
@@ -182,10 +195,20 @@ void corner_clear(){
   chassis.pid_turn_set(-5,127,true);
   chassis.pid_wait();
   corner_ram();
-
   pros::delay(250);
+
 
 }
 void solo_winpoint(){
+  //scoring preload onto alliance stake
+  intake_on();
+  pros::delay(500);
+  intake_off();
+
+  //turning mogo clamp towards flat side of mogo and driving back
+  chassis.pid_turn_set(210.5,115,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-1.75*tile_length,110,true);
+  chassis.pid_wait();
 
 }

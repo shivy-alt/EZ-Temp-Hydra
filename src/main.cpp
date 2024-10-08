@@ -62,6 +62,20 @@ void initialize() {
   ez::as::initialize();
   master.rumble(".");
 }
+void intake_on(){
+  intake1.move(-120);
+  intake2.move(120);
+}
+void intake_off(){
+  intake1.move(0);
+  intake2.move(0);
+}
+
+void intake_reverse(){
+  intake1.move(127);
+  intake2.move(-127);
+}
+
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -154,14 +168,11 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
     if(control.get_digital(DIGITAL_R2)){
-      intake1.move(-114);
-      intake2.move(114);
+      intake_on();
     } else if(control.get_digital(DIGITAL_R1)){
-      intake1.move(114);
-      intake2.move(-114);
+      intake_reverse();
     } else{
-      intake1.move(0);
-      intake2.move(0);
+      intake_off();
     }
    static bool  hi= false;
    static bool hello= false;
