@@ -7,11 +7,7 @@
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-inline pros::Motor intake1(20,pros::MotorGearset::blue);
-inline pros::Motor intake2(12,pros::MotorGearset::blue);
-inline pros::adi::DigitalOut mogo_clamp(8);
-inline pros::Controller control(pros::E_CONTROLLER_MASTER);
-inline pros::adi::DigitalOut hang(1);
+
 
 // Chassis constructor
 // Chassis constructor
@@ -51,7 +47,8 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
       Auton("Auton Skills",auton_skills),
-      Auton("Four Ring Auto",Four_Ring_Auto),
+      Auton("four ring auto red side (RED!!!)",Four_ring_auto_red_side),
+      Auton("four ring auto blue side (BLUE!!!)",Four_ring_auto_blue_side),
       Auton("Two Ring Auto",Two_Ring_Auto),
       Auton("Corner Clear",corner_clear),
       Auton("Solo Winpoint", solo_winpoint),
@@ -62,19 +59,7 @@ void initialize() {
   ez::as::initialize();
   master.rumble(".");
 }
-void intake_on(){
-  intake1.move(-120);
-  intake2.move(120);
-}
-void intake_off(){
-  intake1.move(0);
-  intake2.move(0);
-}
 
-void intake_reverse(){
-  intake1.move(127);
-  intake2.move(-127);
-}
 
 
 /**
@@ -168,25 +153,33 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
     if(control.get_digital(DIGITAL_R2)){
-      intake_on();
+      intake1.move(-127);
+      intake2.move(127);
     } else if(control.get_digital(DIGITAL_R1)){
-      intake_reverse();
+      intake1.move(127);
+      intake2.move(-127);
     } else{
-      intake_off();
+      intake1.move(0);
+      intake2.move(0);
     }
-   static bool  hi= false;
-   static bool hello= false;
+   static bool  mogo_bool= false;
+   static bool hang_bool = false;
+   static bool sweeper_bool = false;
     
     if(control.get_digital_new_press(DIGITAL_Y)){
-      hi=!hi;
-      mogo_clamp.set_value(hi);
+      mogo_bool=!mogo_bool;
+      mogo_clamp.set_value(mogo_bool);
    
     }
     
-    if(control.get_digital_new_press(DIGITAL_X)){
-      hello=!hello;
-      hang.set_value(hello);
+    if(control.get_digital_new_press(DIGITAL_L1)){
+      hang_bool=!hang_bool;
+      hang.set_value(hang_bool);
       
+    }
+    if(control.get_digital_new_press(DIGITAL_X)){
+      sweeper_bool=!sweeper_bool;
+      sweeper.set_value(sweeper_bool);
     }
 
 
