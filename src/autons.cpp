@@ -54,7 +54,9 @@ void default_constants() {
 // Drive Example
 ///
 void corner_clear_func(){
-
+  sweeper.set_value(true);
+  chassis.pid_turn_relative_set(45,120,true);
+  sweeper.set_value(false);
 }
 
 
