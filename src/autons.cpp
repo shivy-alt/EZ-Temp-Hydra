@@ -4,8 +4,8 @@
 int tile_length=24;
 
 void intake_on(){
-  intake1.move(-115);
-  intake2.move(115);
+  intake1.move(-117);
+  intake2.move(117);
 }
 void intake_off(){
   intake1.move(0);
@@ -13,8 +13,8 @@ void intake_off(){
 }
 
 void intake_reverse(){
-  intake1.move(115);
-  intake2.move(-115);
+  intake1.move(117);
+  intake2.move(-117);
 }
 
 
@@ -85,21 +85,21 @@ void Four_ring_auto_red_side(){
   chassis.pid_drive_set(-tile_length*0.25,110,true);
   chassis.pid_wait();
   pros::delay(500);
-  chassis.pid_turn_relative_set(-35,100,true);
+  chassis.pid_turn_relative_set(-29.5,100,true);
   chassis.pid_wait();
-  chassis.pid_drive_set(0.3*tile_length,110,true);
+  chassis.pid_drive_set(0.4*tile_length,110,true);
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_drive_set(-tile_length*0.75,120,true);
   chassis.pid_wait();
   pros::delay(100);
-  chassis.pid_turn_relative_set(-53,120,true);
+  chassis.pid_turn_relative_set(-48,120,true);
   chassis.pid_wait();
   chassis.pid_drive_set(0.7*tile_length,100,true);
   chassis.pid_wait();
   
-  pros::delay(550);
-  chassis.pid_drive_set(-tile_length,75,true);
+  pros::delay(750);
+  chassis.pid_drive_set(-tile_length*1.25,75,true);
   chassis.pid_wait();
 
 
@@ -124,47 +124,45 @@ chassis.pid_drive_set(-0.8*tile_length,120,true);
   intake_on();
   chassis.pid_drive_set(0.92*tile_length,60,true);
   chassis.pid_wait();
-  pros::delay(200);
   chassis.pid_drive_set(-tile_length*0.25,110,true);
   chassis.pid_wait();
   pros::delay(500);
-  chassis.pid_turn_relative_set(35,100,true);
+  chassis.pid_turn_relative_set(29.5,100,true);
   chassis.pid_wait();
-  chassis.pid_drive_set(0.3*tile_length,110,true);
+  chassis.pid_drive_set(0.4*tile_length,110,true);
   chassis.pid_wait();
   pros::delay(500);
   chassis.pid_drive_set(-tile_length*0.75,120,true);
   chassis.pid_wait();
   pros::delay(100);
-  chassis.pid_turn_relative_set(53,120,true);
+  chassis.pid_turn_relative_set(48,120,true);
   chassis.pid_wait();
   chassis.pid_drive_set(0.7*tile_length,100,true);
   chassis.pid_wait();
   
-  pros::delay(550);
-  chassis.pid_drive_set(-tile_length,75,true);
+  pros::delay(750);
+  chassis.pid_drive_set(-tile_length*1.25,75,true);
   chassis.pid_wait();
 
+
+
 }
-void Two_Ring_Auto(){
+void Two_Ring_Corner_Clear_Auto_RED(){
   chassis.pid_drive_set(-0.8*tile_length,120,true);
   chassis.pid_wait();
-  chassis.pid_turn_set(30.5,127,true);
+  chassis.pid_turn_set(-30.5,127,true);
   chassis.pid_wait();
   chassis.pid_drive_set(-0.5*tile_length,100,true);
   chassis.pid_wait();
   mogo_clamp.set_value(true);
   pros::delay(500);
-  intake1.move(-120);
-  intake2.move(120);
+  intake_on();
   pros::delay(1000);
-  intake1.move(0);
-  intake2.move(0);
+  intake_off();
 
-  chassis.pid_turn_set(105,120,true);
+  chassis.pid_turn_set(-105,120,true);
   chassis.pid_wait();
-  intake1.move(-120);
-  intake2.move(120);
+  intake_on();
   pros::delay(100);
   chassis.pid_wait();
   pros::delay(300);
@@ -175,14 +173,44 @@ void Two_Ring_Auto(){
   chassis.pid_wait();
 
   pros::delay(1000);
-  intake1.move(0);
-  intake2.move(0);
+  intake_off();
   pros::delay(500);
 
-  chassis.pid_turn_set(-240,127,true);
+  chassis.pid_turn_relative_set(90,120,true);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(tile_length,110,true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_relative_set(-50,120,true);
+  chassis.pid_wait();
+
+  hang.set_value(true);
+
+  chassis.pid_drive_set(0.65*tile_length,65,true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_relative_set(-147,90,true);
+  chassis.pid_wait();
+
+  hang.set_value(false);
+
+  chassis.pid_drive_set(tile_length*2,110,true);
+  chassis.pid_wait();
+
+  chassis.pid_turn_relative_set(-35,110,true);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(0.5*tile_length,100,true);
+  chassis.pid_wait();
+
+  sweeper.set_value(true);
+  
+
+  /*chassis.pid_turn_set(240,127,true);
   chassis.pid_wait();
   chassis.pid_drive_set(1.35*tile_length,90,true);
-  chassis.pid_wait();
+  chassis.pid_wait();*/
   
   //add ladder touch for quals; add turn towards far positive for elims
   
@@ -192,11 +220,7 @@ void Two_Ring_Auto(){
 
 
 
-void auton_skills(){
-    
-  
 
-}
 
 void corner_clear(){
   //scoring preload onto alliance stake
@@ -238,4 +262,9 @@ chassis.pid_turn_set(90,115);
   chassis.pid_drive_set(-1.75*tile_length,110,true);
   chassis.pid_wait();
 
+}
+void auto_skills(){
+  intake_on();
+  pros::delay(500);
+  
 }
