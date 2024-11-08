@@ -48,7 +48,7 @@ void initialize() {
   ez::as::auton_selector.autons_add({
       Auton("4 ring auto red side (RED!!!)",Four_ring_auto_red_side),
       Auton("four ring auto blue side (BLUE!!!)",Four_ring_auto_blue_side),
-      //Auton("Two Ring Corner Clear",Two_Ring_Corner_Clear_Auto_RED),
+      Auton("Two Ring Corner Clear",Two_Ring_Corner_Clear_Auto_RED),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
   });
