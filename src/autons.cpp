@@ -263,26 +263,37 @@ chassis.pid_turn_set(90,115);
 void auto_skills(){
     intake_on();
     pros::delay(500);
-    chassis.pid_drive_set(20*tile_length, 190, true);
+    chassis.pid_drive_set(2*tile_length, 190, true);
     pros::delay(200);
     chassis.pid_turn_set(-90, 115, true);
     pros::delay(500);
-    chassis.pid_drive_set(-0.55*tile_length, 180, true);
+    chassis.pid_drive_set(-1.2*tile_length, 180, true);
     pros::delay(500);
     mogo_clamp.set_value(true);
+    pros::delay(400);
+    chassis.pid_wait();
     
-    
-    
-    
-    
-    // Step 1: Start intake and move forward to clamp mobile goal
-    // intake1.move(-1000);
-    // intake2.move(-1000);
-    // pros::delay(200);
+    //Get the first 3 rings
+    chassis.pid_turn_set(90,127, true);
+    pros::delay(300);
+    chassis.pid_drive_set(1*tile_length, 200, true);
+    pros::delay(500);
+    // intake_on();
+    // pros::delay(500);
+    // chassis.pid_turn_set(90, 127, true);
+    // pros::delay(500);
     // chassis.pid_drive_set(5*tile_length, 100, true);
-    // chassis.pid_turn_set(-180, 127, true);
-    // pros::delay(100);
-    // chassis.pid_drive_set(-0.3*tile_length,100,true);
+    // pros::delay(500);
+    // intake_on();
+    // pros::delay(500);
+    // chassis.pid_turn_set(90, 127, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(5*tile_length, 100, true);
+    // pros::delay(500);
+    // intake_on();
+    // pros::delay(500);
+    // chassis.pid_turn_set(90, 127, true);
+    // chassis.pid_drive_set(1.5*tile_length,100,true);
     // mogo_clamp.set_value(true);
 
     // // // Step 2: Turn 45 degrees and move backward 2 ft
