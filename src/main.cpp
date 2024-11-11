@@ -46,9 +46,10 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      Auton("4 ring auto red side (RED!!!)",Four_ring_auto_red_side),
-      Auton("four ring auto blue side (BLUE!!!)",Four_ring_auto_blue_side),
-      Auton("Two Ring Corner Clear",Two_Ring_Corner_Clear_Auto_RED),
+      Auton("RED LEFT(4 RING)",Four_ring_auto_red_side),
+      Auton("BLUE RIGHT(4 RING)",Four_ring_auto_blue_side),
+      Auton("BLUE_LEFT(CORNER CLEAR)", Two_Ring_Corner_Clear_Auto_BLUE),
+      Auton("RED_RIGHT(CORNER CLEAR)",Two_Ring_Corner_Clear_Auto_RED),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
   });
