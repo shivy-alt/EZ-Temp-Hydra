@@ -261,126 +261,230 @@ chassis.pid_turn_set(90,115);
 
 }
 void auto_skills(){
-  //score preload onto alliance stake
-  intake_on();
+  // //score preload onto alliance stake
+  // intake_on();
 
-  //clamp onto mogo
-  chassis.pid_drive_set(0.7*tile_length, 200, true);
-  chassis.pid_turn_set(-90, 127, true);
-  chassis.pid_drive_set(-1*tile_length, 200, true);
-  mogo_clamp.set_value(true);
+  // //clamp onto mogo
+  // chassis.pid_drive_set(0.7*tile_length, 200, true);
+  // chassis.pid_turn_set(-90, 127, true);
+  // chassis.pid_drive_set(-1*tile_length, 200, true);
+  // mogo_clamp.set_value(true);
 
-  //turn and score ring #1 for mogo #1
-  chassis.pid_turn_set(135, 127, true);
-  pros::delay(500);
-  intake_on();
-  pros::delay(500);
+  // //turn and score ring #1 for mogo #1
+  // chassis.pid_turn_set(135, 127, true);
+  // pros::delay(500);
+  // intake_on();
+  // pros::delay(500);
 
-  //score ring #2 for mogo #1
-  chassis.pid_drive_set(1.2*tile_length, 200, true);
-  intake_on();
-  pros::delay(500);
+  // //score ring #2 for mogo #1
+  // chassis.pid_drive_set(1.2*tile_length, 200, true);
+  // intake_on();
+  // pros::delay(500);
 
-  //score ring #3 for mogo #1
-  chassis.pid_turn_set(180, 127, true);
-  chassis.pid_drive_set(2*tile_length, 200, true);
-  intake_on();
+  // //score ring #3 for mogo #1
+  // chassis.pid_turn_set(180, 127, true);
+  // chassis.pid_drive_set(2*tile_length, 200, true);
+  // intake_on();
 
-  //score ring #4 for mogo #1
-  chassis.pid_turn_set(90, 127, true);
-  chassis.pid_drive_set(0.5*tile_length, 200, true);
-  intake_on();
+  // //score ring #4 for mogo #1
+  // chassis.pid_turn_set(90, 127, true);
+  // chassis.pid_drive_set(0.5*tile_length, 200, true);
+  // intake_on();
 
-  //score ring #5 for mogo #1
-  chassis.pid_turn_set(-90, 127, true);
-  chassis.pid_drive_set(0.5*tile_length, 200, true);
-  intake_on();
+  // //score ring #5 for mogo #1
+  // chassis.pid_turn_set(-90, 127, true);
+  // chassis.pid_drive_set(0.5*tile_length, 200, true);
+  // intake_on();
 
-  //score ring #6 for mogo #1
-  chassis.pid_turn_set(135, 127, true);
-  chassis.pid_drive_set(1.75*tile_length, 200, true);
-  intake_on();
+  // //score ring #6 for mogo #1
+  // chassis.pid_turn_set(135, 127, true);
+  // chassis.pid_drive_set(1.75*tile_length, 200, true);
+  // intake_on();
 
-  //score mogo #1 in corner
-  chassis.pid_drive_set(-2*(sqrt(tile_length^2)), 200, true);
-  mogo_clamp.set_value(false);
+  // //score mogo #1 in corner
+  // chassis.pid_drive_set(-2*(sqrt(tile_length^2)), 200, true);
+  // mogo_clamp.set_value(false);
 
-  //drive to other side and clamp onto mogo
-  chassis.pid_drive_set(tile_length, 200, true);
-  chassis.pid_turn_set(135, 127, true);
-  chassis.pid_drive_set(-3*tile_length, 200, true);
-  mogo_clamp.set_value(true);
+  //scoring preload onto alliance stake
+    intake_on();
+    pros::delay(500);
 
-  //score ring #1 for mogo #2
-  chassis.pid_turn_set(-135, 127, true);
-  chassis.pid_drive_set(-2*(sqrt(tile_length^2)), 200, true);
-  intake_on();
+    //going for first mogo + scoring 6 rings
+    chassis.pid_drive_set(0.6*tile_length, 100, true);
+    chassis.pid_wait();
+    pros::delay(350);
+    chassis.pid_turn_set(-90, 115, true);
+    pros::delay(500);
+    chassis.pid_drive_set(-0.65*tile_length,100,true);
+    chassis.pid_wait();
+    mogo_clamp.set_value(true);
+    pros::delay(250);          
 
-  //score ring #2 for mogo #2
-  chassis.pid_turn_set(30, 127, true);
-  chassis.pid_drive_set(24.74, 200, true);
-  intake_on();
+    chassis.pid_turn_relative_set(139,115,true);
+    chassis.pid_wait();
+    intake_on();
+    chassis.pid_drive_set(1.55*tile_length,110,true);
+    chassis.pid_wait();
+    chassis.pid_turn_relative_set(-25,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(0.8*tile_length,65,true);
+    chassis.pid_wait();
+    pros::delay(500);
 
-  //score ring #3 for mogo #2
-  chassis.pid_turn_set(165, 127, true);
-  chassis.pid_drive_set(43.27, 200, true);
-  intake_on();
+    chassis.pid_turn_set(171,120,true);
+    chassis.pid_wait();
 
-  //score ring #4 for mogo #2
-  chassis.pid_turn_set(90, 127, true);
-  chassis.pid_drive_set(2*(sqrt(tile_length^2)), 200, true);
-  intake_on();
+    chassis.pid_drive_set(1.55*tile_length,115,true);
+    chassis.pid_wait();
+    pros::delay(350);
+    chassis.pid_drive_set(-0.6*tile_length,100,true);
+    chassis.pid_wait();
+    chassis.pid_turn_relative_set(28,80,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(0.9*tile_length,80,true);
+    chassis.pid_wait();
+    chassis.pid_turn_relative_set(-10,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(0.5*tile_length,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(-0.6*tile_length,100,true);
+    chassis.pid_wait();
+    intake_on();
+    chassis.pid_turn_relative_set(117,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(1.15*tile_length,100,true);
+    chassis.pid_wait();
+    pros::delay(500);
+    chassis.pid_turn_relative_set(10,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(-1.8*tile_length,60,true);
+    chassis.pid_wait();
+    mogo_clamp.set_value(false);
+    pros::delay(300);
+    
+    //drive to other side and clamp onto mogo #2
+    chassis.pid_drive_set(0.47*tile_length, 200, true);
+    pros::delay(500);
+    chassis.pid_turn_relative_set(135, 100, true);
+    pros::delay(500);
+    chassis.pid_drive_set(-3*tile_length, 200, true);
+    pros::delay(500);
+    chassis.pid_wait();
+    mogo_clamp.set_value(true);
+    pros::delay(500);
 
-  //score ring #5 for mogo #2
-  chassis.pid_turn_set(90, 127, true);
-  chassis.pid_drive_set(0.5*tile_length, 200, true);
-  intake_on();
-  
-  //score ring #6 for mogo #2
-  chassis.pid_turn_set(150, 127, true);
-  chassis.pid_drive_set(0.7*tile_length, 200, true);
-  intake_on();
+    //score ring #1 into mogo #2
+    chassis.pid_turn_relative_set(-139,115,true);
+    chassis.pid_wait();
+    intake_on();
+    chassis.pid_drive_set(1.55*tile_length,110,true);
+    chassis.pid_wait();
 
-  //score mogo #2 in corner
-  chassis.pid_turn_set(90, 127, true);
-  chassis.pid_drive_set(-0.5*tile_length, 200, true);
-  mogo_clamp.set_value(false);
+    //score ring #2 onto mogo #2
+    chassis.pid_turn_relative_set(25,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(0.8*tile_length,65,true);
+    chassis.pid_wait();
 
-  //intake ring #1 for mogo #3
-  chassis.pid_turn_set(-30, 127, true);
-  chassis.pid_drive_set(4, 200, true);
-  intake_on();
+    //score ring #3 onto mogo #2
+    chassis.pid_turn_relative_set(-171,100,true);
+    pros::delay(500);
+    chassis.pid_wait();
+    pros::delay(500);
+    chassis.pid_drive_set(1.55*tile_length,115,true);
+    chassis.pid_wait();
+    pros::delay(350);
 
-  //clamp on mogo #3
-  chassis.pid_turn_set(210, 127, true);
-  chassis.pid_drive_set(1.75, 200, true);
-  mogo_clamp.set_value(true);
+    //score ring #4 into mogo #2
+    chassis.pid_drive_set(-0.6*tile_length,100,true);
+    chassis.pid_wait();
+    chassis.pid_turn_relative_set(28,80,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(0.9*tile_length,80,true);
+    chassis.pid_wait();
 
-  //get ring #2 for mogo #3
-  chassis.pid_turn_set(-45, 127, true);
-  chassis.pid_drive_set(1.5*tile_length, 200, true);
-  
-  //score mogo #3 in corner
-  chassis.pid_turn_set(135, 127, true);
-  chassis.pid_drive_set(1.1*tile_length, 200, true);
-  corner_clear_func();
-  chassis.pid_turn_set(75, 127, true);
-  chassis.pid_drive_set(-1.1*tile_length, 200, true);
-  mogo_clamp.set_value(false);
+    //score ring #5 onto mogo #2
+    chassis.pid_turn_relative_set(-20,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(0.5*tile_length,100,true);
+    chassis.pid_wait();
+    intake_on();
 
-  //score mogo #4 in corner
-  chassis.pid_drive_set(0.5*tile_length, 200, true);
-  chassis.pid_turn_set(135, 127, true);
-  chassis.pid_drive_set(-3*tile_length, 200, true);
-  mogo_clamp.set_value(true);
-  chassis.pid_turn_set(-30, 127, true);
-  chassis.pid_drive_set(-2*tile_length, 200, true);
-  mogo_clamp.set_value(false);
+    //score ring #6 onto mogo #2
+    chassis.pid_turn_relative_set(-117,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(1.15*tile_length,100,true);
+    chassis.pid_wait();
+    pros::delay(500);
 
-  //hang
-  chassis.pid_turn_set(-45, 127, true);
-  hang.set_value(true);
-  chassis.pid_drive_set(2.8*tile_length, 200, true);
-  chassis.pid_drive_set(-0.3*tile_length, 200, true);
+    //score mogo #2 into corner
+    chassis.pid_turn_relative_set(-10,100,true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(-1.8*tile_length,60,true);
+    chassis.pid_wait();
+    mogo_clamp.set_value(false);
+    pros::delay(300);
+
+    // //intake ring #1 for mogo #3
+    // chassis.pid_turn_relative_set(-30, 100, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(4, 200, true);
+    // pros::delay(500);
+    // intake_on();
+    // pros::delay(500);
+
+    // //clamp on mogo #3
+    // chassis.pid_turn_relative_set(210, 100, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(1.75, 200, true);
+    // pros::delay(500);
+    // mogo_clamp.set_value(true);
+    // pros::delay(500);
+
+    // //get ring #2 for mogo #3
+    // chassis.pid_turn_relative_set(-45, 100, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(1.5*tile_length, 200, true);
+    // pros::delay(500);
+    
+    // //score mogo #3 in corner
+    // chassis.pid_turn_relative_set(135, 100, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(1.1*tile_length, 200, true);
+    // pros::delay(500);
+    // corner_clear_func();
+    // pros::delay(500);
+    // chassis.pid_turn_relative_set(75, 100, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(-1.1*tile_length, 200, true);
+    // pros::delay(500);
+    // mogo_clamp.set_value(false);
+    // pros::delay(500);
+
+    // //score mogo #4 in corner
+    // chassis.pid_drive_set(0.5*tile_length, 200, true);
+    // pros::delay(500);
+    // chassis.pid_turn_relative_set(135, 100, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(-3*tile_length, 200, true);
+    // pros::delay(500);
+    // mogo_clamp.set_value(true);
+    // pros::delay(500);
+    // chassis.pid_turn_relative_set(-30, 100, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(-2*tile_length, 200, true);
+    // pros::delay(500);
+    // mogo_clamp.set_value(false);
+    // pros::delay(500);
+
+    // //hang
+    // chassis.pid_turn_relative_set(-45, 100, true);
+    // pros::delay(500);
+    // hang.set_value(true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(2.8*tile_length, 200, true);
+    // pros::delay(500);
+    // chassis.pid_drive_set(-0.3*tile_length, 200, true);
+    // pros::delay(500);
 
 }
