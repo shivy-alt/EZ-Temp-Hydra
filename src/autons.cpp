@@ -364,11 +364,12 @@ void auto_skills(){
     chassis.pid_wait();
     
     //drive to other side and clamp onto mogo #2
-    chassis.pid_drive_set(0.4*tile_length, 200, true);
+    chassis.pid_drive_set(0.47*tile_length, 200, true);
     pros::delay(500);
-    chassis.pid_turn_relative_set(135, 100, true);
+    chassis.pid_turn_relative_set(125, 100, true);
     pros::delay(300);
-    chassis.pid_drive_set(-3*tile_length, 200, true);
+    chassis.pid_wait();
+    chassis.pid_drive_set(-3*tile_length, 170, true);
     chassis.pid_wait();
     mogo_clamp.set_value(true);
     pros::delay(500);
@@ -418,7 +419,7 @@ void auto_skills(){
     pros::delay(500);
 
     //score mogo #2 into corner
-    chassis.pid_turn_relative_set(-10,100,true);
+    chassis.pid_turn_relative_set(-5,100,true);
     chassis.pid_wait();
     chassis.pid_drive_set(-1.8*tile_length,60,true);
     chassis.pid_wait();
@@ -428,18 +429,18 @@ void auto_skills(){
     //intake ring #1 for mogo #3
     chassis.pid_turn_relative_set(-30, 100, true);
     pros::delay(500);
-    chassis.pid_drive_set(4, 200, true);
+    chassis.pid_drive_set(4*tile_length, 200, true);
     pros::delay(500);
     intake_on();
     pros::delay(500);
 
-    // //clamp on mogo #3
-    // chassis.pid_turn_relative_set(210, 100, true);
-    // pros::delay(500);
-    // chassis.pid_drive_set(1.75, 200, true);
-    // pros::delay(500);
-    // mogo_clamp.set_value(true);
-    // pros::delay(500);
+    //clamp on mogo #3
+    chassis.pid_turn_relative_set(210, 100, true);
+    pros::delay(500);
+    chassis.pid_drive_set(1.75, 200, true);
+    pros::delay(500);
+    mogo_clamp.set_value(true);
+    pros::delay(500);
 
     // //get ring #2 for mogo #3
     // chassis.pid_turn_relative_set(-45, 100, true);
