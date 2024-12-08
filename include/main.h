@@ -24,6 +24,7 @@
  * E_CONTROLLER_MASTER is pedantically correct within the PROS styleguide, but
  * not convienent for most student programmers.
  */
+#include "pros/rotation.hpp"
 #define PROS_USE_SIMPLE_NAMES
 
 /**
@@ -93,6 +94,8 @@ inline pros::Motor intake1(20,pros::MotorGearset::blue);
 inline pros::Motor intake2(12,pros::MotorGearset::blue);
 inline pros::adi::DigitalOut mogo_clamp(8);
 inline pros::Controller control(pros::E_CONTROLLER_MASTER);
-inline pros::adi::DigitalOut hang(1);
-inline pros::adi::DigitalOut sweeper(2);
+inline pros::adi::DigitalOut sweeper(1);
+inline pros::adi::DigitalOut hang(2);
+inline pros::adi::DigitalOut ldb_sensor(19);
+
 

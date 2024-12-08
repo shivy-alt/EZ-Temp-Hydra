@@ -318,19 +318,24 @@ void corner_clear(){
 
 }
 void solo_winpoint(){
-
-chassis.pid_turn_set(90,115);
-
-  //scoring preload onto alliance stake
-  intake_on();
-  pros::delay(500);
-  intake_off();
-
-  //turning mogo clamp towards flat side of mogo and driving back
-  chassis.pid_turn_set(210.5,115,true);
+  chassis.pid_drive_set(-0.79*tile_length,100,true);
   chassis.pid_wait();
-  chassis.pid_drive_set(-1.75*tile_length,110,true);
+  chassis.pid_turn_relative_set(89,100,true);
   chassis.pid_wait();
+  chassis.pid_drive_set(-0.37*tile_length,100,true);
+  chassis.pid_wait();
+  intake1.move(-127);
+  intake2.move(127);
+  pros::delay(700);
+  intake1.move(0);
+  intake2.move(0);
+  chassis.pid_drive_set(0.375*tile_length,100,true);
+  chassis.pid_wait();
+  chassis.pid_turn_relative_set(143,120,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-1.6*tile_length,100,true);
+  chassis.pid_wait();
+  mogo_clamp.set_value(true);
 
 }
 void auto_skills(){
@@ -398,3 +403,18 @@ void auto_skills(){
     chassis.pid_wait();
     pros::delay(200);
 }
+
+void positive_side_goal_rush(){
+  chassis.pid_drive_set(-1.75*tile_length,120,true);
+  chassis.pid_wait();
+  chassis.pid_turn_set(-32,120,true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-0.6*tile_length,110,true);
+  chassis.pid_wait();
+  mogo_clamp.set_value(true);
+  intake_on();
+  pros::delay(100);
+  chassis.pid_turn_set(33,120,true);
+  chassis.pid_wait();
+} 
+

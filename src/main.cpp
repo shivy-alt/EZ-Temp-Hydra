@@ -1,5 +1,6 @@
 #include "main.h"
 #include "autons.hpp"
+#include "pros/misc.h"
 #include "pros/motor_group.hpp"
 #include "pros/motors.hpp"
 
@@ -7,7 +8,7 @@
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-
+int ldbstate = 1;
 
 // Chassis constructor
 // Chassis constructor
@@ -18,7 +19,7 @@ ez::Drive chassis(
 
     2,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    343);   // Wheel RPM
+    450);   // Wheel RPM
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -52,6 +53,7 @@ void initialize() {
       Auton("RED_RIGHT(CORNER CLEAR)",Two_Ring_Corner_Clear_Auto_RED),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
+      Auton("Pos Goal Rush",positive_side_goal_rush),
   });
 
   // Initialize chassis and auton selector
@@ -131,11 +133,11 @@ void opcontrol() {
       //  When enabled:
       //  * use A and Y to increment / decrement the constants
       //  * use the arrow keys to navigate the constants
-      if (master.get_digital_new_press(DIGITAL_LEFT))
+      if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT))
         chassis.pid_tuner_toggle();
 
       // Trigger the selected autonomous routine
-      if (master.get_digital(DIGITAL_B) && master.get_digital(DIGITAL_DOWN)) {
+      if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
         autonomous();
         chassis.drive_brake_set(driver_preference_brake);
       }
@@ -152,10 +154,10 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-    if(control.get_digital(DIGITAL_R2)){
+    if(control.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       intake1.move(-127);
       intake2.move(127);
-    } else if(control.get_digital(DIGITAL_R1)){
+    } else if(control.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       intake1.move(127);
       intake2.move(-127);
     } else{
@@ -166,23 +168,28 @@ void opcontrol() {
    static bool hang_bool = false;
    static bool sweeper_bool = false;
     
-    if(control.get_digital_new_press(DIGITAL_Y)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)){
       mogo_bool=!mogo_bool;
       mogo_clamp.set_value(mogo_bool);
    
     }
     
-    if(control.get_digital_new_press(DIGITAL_L1)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
       hang_bool=!hang_bool;
       hang.set_value(hang_bool);
       
     }
-    if(control.get_digital_new_press(DIGITAL_X)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){
       sweeper_bool=!sweeper_bool;
       sweeper.set_value(sweeper_bool);
     }
 
-
+    /*if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+        if(ldbstate %2 = 0){
+          ldbmotorgroup.move(degree of rotation for first state)
+        }
+    }
+    */
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
