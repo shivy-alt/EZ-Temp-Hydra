@@ -53,7 +53,7 @@ void initialize() {
       Auton("RED_RIGHT(CORNER CLEAR)",Two_Ring_Corner_Clear_Auto_RED),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
-      Auton("Pos Goal Rush",positive_side_goal_rush),
+     
   });
 
   // Initialize chassis and auton selector
@@ -174,12 +174,12 @@ void opcontrol() {
    
     }
     
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){
       hang_bool=!hang_bool;
       hang.set_value(hang_bool);
       
     }
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
       sweeper_bool=!sweeper_bool;
       sweeper.set_value(sweeper_bool);
     }
