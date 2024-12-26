@@ -8,14 +8,44 @@
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-int ldbstate = 1;
+const int ldbstate = 2;
+const int reloadState = 1;
+int states [ldbstate] = {6000,46000};
+int reloadstate[reloadState] = {2000};
+int currReloadstate = 0;
+int currState = 0;
+int target = 0;
+
+ void nextState(){
+  currState += 1;
+  if (currState == 2){
+    currState = 0;
+  }
+  target = states[currState];
+
+ }
+
+ void nextReloadState(){
+  currReloadstate += 0;
+  if (currReloadstate == 0){
+    currReloadstate = 0;
+  }
+ }
+
+
+void liftControl(){
+  double kp = 0.4;
+  double error = target - ldb_sensor.get_position();
+  double velocity = kp* error;
+  ldb_motor.move(velocity); 
+}
 
 // Chassis constructor
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-18, -1, -10},     // Left Chassis Ports (negative port will reverse it!)
-    {17, 11, 5},  // Right Chassis Ports (negative port will reverse it!)
+    {19, 12, -11},     // Left Chassis Ports (negative port will reverse it!)
+    {5, 9, -10},  // Right Chassis Ports (negative port will reverse it!)
 
     2,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -53,13 +83,23 @@ void initialize() {
       Auton("RED_RIGHT(CORNER CLEAR)",Two_Ring_Corner_Clear_Auto_RED),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
-     
+      Auton("Pos Goal Rush",positive_side_goal_rush),
   });
 
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
   master.rumble(".");
+
+  pros::Task liftcontrolTask([]{
+    while (true){
+        liftControl();
+        pros::delay(10);
+    }
+
+  });
+
+  
 }
 
 
@@ -156,13 +196,13 @@ void opcontrol() {
     // . . .
     if(control.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       intake1.move(-127);
-      intake2.move(127);
+      
     } else if(control.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       intake1.move(127);
-      intake2.move(-127);
+      
     } else{
       intake1.move(0);
-      intake2.move(0);
+      
     }
    static bool  mogo_bool= false;
    static bool hang_bool = false;
@@ -174,22 +214,22 @@ void opcontrol() {
    
     }
     
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
       hang_bool=!hang_bool;
       hang.set_value(hang_bool);
       
     }
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){
       sweeper_bool=!sweeper_bool;
       sweeper.set_value(sweeper_bool);
     }
 
-    /*if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
-        if(ldbstate %2 = 0){
-          ldbmotorgroup.move(degree of rotation for first state)
-        }
-    }
-    */
+   if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+    nextState();
+   }
+   if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
+    nextReloadState();
+   }
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
