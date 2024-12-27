@@ -44,10 +44,10 @@ void liftControl(){
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {19, 12, -11},     // Left Chassis Ports (negative port will reverse it!)
-    {5, 9, -10},  // Right Chassis Ports (negative port will reverse it!)
+    {-19, -12, 11},     // Left Chassis Ports (negative port will reverse it!)
+    {-5, -9, 10},  // Right Chassis Ports (negative port will reverse it!)
 
-    2,      // IMU Port
+    16,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM
 
@@ -195,10 +195,10 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
     if(control.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      intake1.move(-127);
+      intake1.move(127);
       
     } else if(control.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-      intake1.move(127);
+      intake1.move(-127);
       
     } else{
       intake1.move(0);
