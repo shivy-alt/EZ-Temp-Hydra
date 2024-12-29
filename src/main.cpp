@@ -1,6 +1,8 @@
 #include "main.h"
-#include "lift.hpp"
-#include "pros/misc.h"
+/*#include "lift.hpp"
+#include "lift.cpp"
+#include "pros/misc.h"*/
+#include "subsystems.hpp"
 
 
 /////
@@ -10,7 +12,9 @@
 
 
 
- 
+ bool liftToggle = false;
+
+pros::Task Lift_Task(lift_task);
 
 
 
@@ -65,7 +69,9 @@ void initialize() {
   ez::as::initialize();
   master.rumble(".");
 
-  
+  liftPID.exit_condition_set(80, 50, 300, 150, 500, 500);
+  ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
   
 }
@@ -92,6 +98,7 @@ void disabled() {
  */
 void competition_initialize() {
   // . . .
+  ldb_sensor.reset_position();
 }
 
 /**
@@ -129,6 +136,7 @@ void autonomous() {
  */
 
 void opcontrol() {
+  ldb_sensor.reset_position();
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
@@ -196,7 +204,7 @@ void opcontrol() {
     }
 
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { 
-      liftPID.target_set(5000); // Grab ring
+      liftPID.target_set(500); // Grab ring
         }
         //scoring
     else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
