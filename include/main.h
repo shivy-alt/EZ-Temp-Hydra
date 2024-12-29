@@ -90,10 +90,3 @@ void opcontrol(void);
 
 #endif  // _PROS_MAIN_H_
 
-inline pros::Motor intake1(20,pros::MotorGearset::blue);
-inline pros::adi::DigitalOut mogo_clamp(8);
-inline pros::Controller control(pros::E_CONTROLLER_MASTER);
-inline pros::adi::DigitalOut sweeper(1);
-inline pros::adi::DigitalOut hang(2);
-inline pros::Rotation ldb_sensor(18);
-inline pros::Motor ldb_motor(0);

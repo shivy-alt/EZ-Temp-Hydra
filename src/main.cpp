@@ -3,6 +3,8 @@
 #include "pros/misc.h"
 #include "pros/motor_group.hpp"
 #include "pros/motors.hpp"
+#include "subsystems.hpp"
+
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -10,11 +12,15 @@
 /////
 const int ldbstate = 2;
 const int reloadState = 1;
-int states [ldbstate] = {6000,46000};
-int reloadstate[reloadState] = {2000};
+int states [ldbstate] = {2047,15600};
+int reloadstate[reloadState] = {0};
 int currReloadstate = 0;
 int currState = 0;
 int target = 0;
+double kp = 1.4;
+double error = target - ldb_sensor.get_position();
+double velocity = kp* error;
+  
 
  void nextState(){
   currState += 1;
@@ -31,21 +37,23 @@ int target = 0;
     currReloadstate = 0;
   }
  }
-
+void ldb_movement(){
+  ldb_motor1.move(velocity);
+  ldb_motor2.move(velocity);
+}
 
 void liftControl(){
-  double kp = 0.4;
-  double error = target - ldb_sensor.get_position();
-  double velocity = kp* error;
-  ldb_motor.move(velocity); 
+  ldb_movement();
+  
 }
+
 
 // Chassis constructor
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {-19, -12, 11},     // Left Chassis Ports (negative port will reverse it!)
-    {-5, -9, 10},  // Right Chassis Ports (negative port will reverse it!)
+    {-19, 11, -12},     // Left Chassis Ports (negative port will reverse it!)
+    {5, 7, -6},  // Right Chassis Ports (negative port will reverse it!)
 
     16,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
@@ -216,7 +224,7 @@ void opcontrol() {
     
     if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
       hang_bool=!hang_bool;
-      hang.set_value(hang_bool);
+      
       
     }
     if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){

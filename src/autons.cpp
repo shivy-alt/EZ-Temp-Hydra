@@ -278,7 +278,7 @@ void Two_Ring_Corner_Clear_Auto_BLUE(){
 
 
 
-  hang.set_value(true);
+  
   
 
   /*chassis.pid_turn_set(240,127,true);
