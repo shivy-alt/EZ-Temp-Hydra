@@ -10,40 +10,32 @@
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-const int ldbstate = 2;
-const int reloadState = 1;
-int states [ldbstate] = {2047,15600};
-int reloadstate[reloadState] = {0};
-int currReloadstate = 0;
+const int ldbstate = 3;
+int states [ldbstate] = {0, 20,156};
 int currState = 0;
 int target = 0;
-double kp = 1.4;
-double error = target - ldb_sensor.get_position();
-double velocity = kp* error;
+
   
 
  void nextState(){
   currState += 1;
-  if (currState == 2){
+  if (currState == 3){
     currState = 0;
   }
   target = states[currState];
 
  }
 
- void nextReloadState(){
-  currReloadstate += 0;
-  if (currReloadstate == 0){
-    currReloadstate = 0;
-  }
- }
-void ldb_movement(){
-  ldb_motor1.move(velocity);
-  ldb_motor2.move(velocity);
-}
+
+ 
+
 
 void liftControl(){
-  ldb_movement();
+  double kp = 1.4;
+  double error = target - ldb_sensor.get_position();
+  double velocity = kp* error;
+  ldb_motor1.move(velocity);
+  ldb_motor2.move(-velocity);
   
 }
 
@@ -235,9 +227,7 @@ void opcontrol() {
    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
     nextState();
    }
-   if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
-    nextReloadState();
-   }
+  
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
