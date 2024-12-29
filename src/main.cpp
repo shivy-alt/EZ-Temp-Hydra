@@ -1,43 +1,17 @@
 #include "main.h"
-#include "autons.hpp"
+#include "lift.hpp"
 #include "pros/misc.h"
-#include "pros/motor_group.hpp"
-#include "pros/motors.hpp"
-#include "subsystems.hpp"
 
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-const int ldbstate = 3;
-int states [ldbstate] = {0, 20,156};
-int currState = 0;
-int target = 0;
 
-  
-
- void nextState(){
-  currState += 1;
-  if (currState == 3){
-    currState = 0;
-  }
-  target = states[currState];
-
- }
 
 
  
 
-
-void liftControl(){
-  double kp = 1.4;
-  double error = target - ldb_sensor.get_position();
-  double velocity = kp* error;
-  ldb_motor1.move(velocity);
-  ldb_motor2.move(-velocity);
-  
-}
 
 
 // Chassis constructor
@@ -91,13 +65,7 @@ void initialize() {
   ez::as::initialize();
   master.rumble(".");
 
-  pros::Task liftcontrolTask([]{
-    while (true){
-        liftControl();
-        pros::delay(10);
-    }
-
-  });
+  
 
   
 }
@@ -159,11 +127,14 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
 void opcontrol() {
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
   chassis.drive_brake_set(driver_preference_brake);
+  ldb_motor1.set_brake_mode(MOTOR_BRAKE_HOLD);
+  ldb_motor2.set_brake_mode(MOTOR_BRAKE_HOLD);
 
   while (true) {
     // PID Tuner
@@ -224,9 +195,20 @@ void opcontrol() {
       sweeper.set_value(sweeper_bool);
     }
 
-   if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
-    nextState();
-   }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { 
+      liftPID.target_set(5000); // Grab ring
+        }
+        //scoring
+    else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+      liftPID.target_set(16000);  //scoring
+        } 
+        //tipping
+    else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+      liftPID.target_set(25000);  // hold up
+        } 
+    else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+      liftPID.target_set(0); // reset to 0
+        } 
   
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }

@@ -90,3 +90,11 @@ void opcontrol(void);
 
 #endif  // _PROS_MAIN_H_
 
+#include "autons.hpp"
+#include "pros/misc.h"
+#include "pros/motor_group.hpp"
+#include "pros/motors.h"
+#include "pros/motors.hpp"
+#include "subsystems.hpp"
+
+
