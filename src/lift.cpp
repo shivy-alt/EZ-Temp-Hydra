@@ -1,7 +1,7 @@
 #include "main.h"
 
 
-void set_lift(int input) {
+/*void set_lift(int input) {
   ldb_motor1.move(input);
   ldb_motor2.move(-input);
 }
@@ -22,4 +22,4 @@ void lift_wait() {
   while (liftPID.exit_condition({ldb_motor1,ldb_motor2}, true) == ez::RUNNING) {
     pros::delay(ez::util::DELAY_TIME);
   }
-}
+}*/

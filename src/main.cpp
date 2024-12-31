@@ -1,8 +1,12 @@
 #include "main.h"
 /*#include "lift.hpp"
+#include "EZ-Template/util.hpp"
 #include "lift.cpp"
 #include "pros/misc.h"*/
+#include "pros/motors.h"
 #include "subsystems.hpp"
+
+
 
 
 /////
@@ -12,9 +16,9 @@
 
 
 
- bool liftToggle = false;
+ /*bool liftToggle = false;
 
-pros::Task Lift_Task(lift_task);
+pros::Task Lift_Task(lift_task);*/
 
 
 
@@ -35,7 +39,77 @@ ez::Drive chassis(
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+const float Kp=0.5;   // const float Kp=0.5;
+const float Ki=0.01;  // const float Ki=0.01; 
+const float Kd=1.5;   // const float Kd=0.1;
+
+const int POSITION_TOLERANCE= 500;
+const int MAX_OUTPUT=50;
+
+void moveArmToPosition(int targetPosition){
+int error= 0, lastError=0;
+int integral=0;
+int derivative=0;
+ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+while(true){
+    int currentPosition = ldb_sensor.get_position();
+    error= targetPosition - currentPosition;
+
+    if(std::abs(error) <= POSITION_TOLERANCE){
+        ldb_motor1.brake();
+        ldb_motor2.brake();
+        break;
+    }
+
+    integral += error;
+    derivative =  error - lastError;
+    lastError = error;
+
+    int output = (Kp*error) + (Ki*integral ) + (Kd * derivative);
+
+    output= std::clamp(output, -MAX_OUTPUT, MAX_OUTPUT);
+
+    ldb_motor1.move_velocity(output);
+    ldb_motor2.move_velocity(output);
+
+    pros::delay(20);
+
+    }
+}
+int ladyBrownBoolCounter=0;
+
+void ladyBrownVariableCount(){
+    if (ladyBrownBoolCounter==0){
+        moveArmToPosition(0.0);
+    }
+
+    if (ladyBrownBoolCounter==1){
+        moveArmToPosition(1500.0);
+    }
+
+    if (ladyBrownBoolCounter==2){
+        
+        moveArmToPosition(13500.0);
+        pros::delay(50);
+        
+    }
+
+    if (ladyBrownBoolCounter>2){
+        ladyBrownBoolCounter=0;
+        moveArmToPosition(0.0);
+
+    }
+}
+
+
+
+
+
+
 void initialize() {
+  ldb_sensor.reset_position();
   // Print our branding over your terminal :D
   ez::ez_template_print();
 
@@ -69,10 +143,10 @@ void initialize() {
   ez::as::initialize();
   master.rumble(".");
 
-  liftPID.exit_condition_set(80, 50, 300, 150, 500, 500);
+  /*liftPID.exit_condition_set(80, 50, 300, 150, 500, 500);
   ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
+  ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);*/
+ 
   
 }
 
@@ -100,6 +174,14 @@ void competition_initialize() {
   // . . .
   ldb_sensor.reset_position();
 }
+/*void ldb_task() {
+  pros::delay(2000);
+  while (true){
+    set_lift(ldbPID.compute(ldb_sensor.get_position()/100.0));
+
+    pros::delay(ez::util::DELAY_TIME);
+  }
+}*/
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -121,6 +203,8 @@ void autonomous() {
   ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 
+
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -136,7 +220,7 @@ void autonomous() {
  */
 
 void opcontrol() {
-  ldb_sensor.reset_position();
+
   // This is preference to what you like to drive on
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
@@ -203,21 +287,43 @@ void opcontrol() {
       sweeper.set_value(sweeper_bool);
     }
 
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) { 
-      liftPID.target_set(500); // Grab ring
+    /*if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) { 
+      liftPID.target_set(20); // Grab ring
         }
         //scoring
-    else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+    else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
       liftPID.target_set(16000);  //scoring
         } 
         //tipping
-    else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
+    else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
       liftPID.target_set(25000);  // hold up
         } 
-    else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+    else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
       liftPID.target_set(0); // reset to 0
-        } 
+        } */
   
+   if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+      ldb_motor1.move(-127);
+      ldb_motor2.move(127);
+     } else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+      ldb_motor1.move(127);
+      ldb_motor2.move(-127);
+     } else{
+      ldb_motor1.brake();
+      ldb_motor2.brake();
+     }
+
+     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+            ladyBrownVariableCount();
+            ladyBrownBoolCounter++;
+
+           // moveArmToPosition(9000);
+
+          }
+
+     
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
+
+  
 }
