@@ -14,4 +14,5 @@ void Two_Ring_Corner_Clear_Auto_BLUE();
 void auto_skills();
 void corner_clear();
 void solo_winpoint();
-void positive_side_goal_rush();
+void goal_rush();
+void three_ring_and_wallstake();

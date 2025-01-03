@@ -1,6 +1,7 @@
 #include "main.h"
 /*#include "lift.hpp"
 #include "EZ-Template/util.hpp"
+#include "autons.hpp"
 #include "lift.cpp"
 #include "pros/misc.h"*/
 #include "pros/motors.h"
@@ -39,14 +40,14 @@ ez::Drive chassis(
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-const float Kp=0.5;   // const float Kp=0.5;
+/*const float Kp=0.5;   // const float Kp=0.5;
 const float Ki=0.01;  // const float Ki=0.01; 
 const float Kd=1.5;   // const float Kd=0.1;
 
 const int POSITION_TOLERANCE= 500;
-const int MAX_OUTPUT=50;
+const int MAX_OUTPUT=50;*/
 
-void moveArmToPosition(int targetPosition){
+/*void moveArmToPosition(int targetPosition){
 int error= 0, lastError=0;
 int integral=0;
 int derivative=0;
@@ -77,7 +78,7 @@ while(true){
     pros::delay(20);
 
     }
-}
+}*/
 int ladyBrownBoolCounter=0;
 
 void ladyBrownVariableCount(){
@@ -131,11 +132,10 @@ void initialize() {
   ez::as::auton_selector.autons_add({
       Auton("RED LEFT(4 RING)",Four_ring_auto_red_side),
       Auton("BLUE RIGHT(4 RING)",Four_ring_auto_blue_side),
-      Auton("BLUE_LEFT(CORNER CLEAR)", Two_Ring_Corner_Clear_Auto_BLUE),
-      Auton("RED_RIGHT(CORNER CLEAR)",Two_Ring_Corner_Clear_Auto_RED),
+      Auton("3 RING + WALLSTAKE", three_ring_and_wallstake),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
-      Auton("Pos Goal Rush",positive_side_goal_rush),
+      Auton("Pos Goal Rush",goal_rush),
   });
 
   // Initialize chassis and auton selector
@@ -313,7 +313,7 @@ void opcontrol() {
       ldb_motor2.brake();
      }
 
-     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
             ladyBrownVariableCount();
             ladyBrownBoolCounter++;
 
