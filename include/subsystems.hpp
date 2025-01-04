@@ -21,7 +21,7 @@ inline pros::Controller control(pros::E_CONTROLLER_MASTER);
 inline pros::adi::DigitalOut sweeper(1);
 
 inline pros::Rotation ldb_sensor(9);
-inline pros::Motor ldb_motor1(10); 
+inline pros::Motor ldb_motor1(-10); 
 
 
 
@@ -34,13 +34,13 @@ inline void unclamp_mogo(){
 }
 
 
-inline pros::Motor ldb_motor2(-8);
+inline pros::Motor ldb_motor2(8);
 
 inline ez::PID ldbPID{0.45, 0, 0, 0, "LadyBrown"};
 
 inline void set_lift(int input){
-    ldb_motor1.move(input);
-    ldb_motor2.move(input);
+    ldb_motor1.move(-127);
+    ldb_motor2.move(127);
 }
 
 inline void ldb_wait() {
@@ -49,9 +49,9 @@ inline void ldb_wait() {
     }
 }
 
-inline const float Kp=0.5;   // const float Kp=0.5;
+inline const float Kp=1.4;   // const float Kp=0.5;
 inline const float Ki=0.01;  // const float Ki=0.01; 
-inline const float Kd=1.5;   // const float Kd=0.1;
+inline const float Kd=3;   // const float Kd=0.1;
 
 inline const int POSITION_TOLERANCE= 500;
 inline const int MAX_OUTPUT=50;

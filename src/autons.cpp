@@ -106,6 +106,7 @@ void Four_ring_auto_red_side(){
   drive_forward(0.5, 110,true);
   pros::delay(500);
   intake_off();
+  drive_backward(0.5, 100, true);
 
   
 

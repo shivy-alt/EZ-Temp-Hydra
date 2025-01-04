@@ -87,20 +87,24 @@ void ladyBrownVariableCount(){
     }
 
     if (ladyBrownBoolCounter==1){
-        moveArmToPosition(1500.0);
+        moveArmToPosition(2583);
     }
 
-    if (ladyBrownBoolCounter==2){
+    /*if (ladyBrownBoolCounter==2){
         
         moveArmToPosition(13500.0);
         pros::delay(50);
         
-    }
+    }*/
 
-    if (ladyBrownBoolCounter>2){
+    if (ladyBrownBoolCounter>1){
         ladyBrownBoolCounter=0;
         moveArmToPosition(0.0);
 
+    if (ldb_sensor.get_position()>2583){
+      ladyBrownBoolCounter=0;
+      moveArmToPosition(0.0);
+    }
     }
 }
 
@@ -302,16 +306,19 @@ void opcontrol() {
       liftPID.target_set(0); // reset to 0
         } */
   
-   if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-      ldb_motor1.move(-127);
-      ldb_motor2.move(127);
-     } else if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+   if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       ldb_motor1.move(127);
+      ldb_motor2.move(127);
+      
+    } else if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+      ldb_motor1.move(-127);
       ldb_motor2.move(-127);
-     } else{
-      ldb_motor1.brake();
-      ldb_motor2.brake();
-     }
+      
+    } else{
+      ldb_motor1.move(0);
+      ldb_motor2.move(0);
+      
+    }
 
      if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
             ladyBrownVariableCount();
