@@ -5,7 +5,7 @@
 int tile_length=24;
 
 void intake_on(){
-  intake1.move(-127);
+  intake1.move(127);
 
   
 }
@@ -16,7 +16,7 @@ void intake_off(){
 }
 
 void intake_reverse(){
-  intake1.move(127);
+  intake1.move(-127);
   
 
 }
@@ -65,22 +65,23 @@ void corner_clear_func(){
 
 void drive_forward(double distance, int speed, bool slew){
   chassis.pid_drive_set(tile_length*distance,speed,slew);
-  chassis.pid_wait();
+  
+  
 }
 
 void drive_backward(double distance, int drive_speed, bool slew){
   chassis.pid_drive_set(-tile_length*distance,drive_speed,slew);
-  chassis.pid_wait();
+  
 }
 
-void relative_turn(int target, int turn_speed, int turn_slew){
+void relative_turn(int target, int turn_speed, bool turn_slew){
   chassis.pid_turn_relative_set(target, turn_speed, turn_slew);
-  chassis.pid_wait();
+  
 }
 
 void regular_turn(int target, int turn_speed, bool turn_slew){
   chassis.pid_turn_set(target, turn_speed, turn_slew);
-  chassis.pid_wait();
+  
 }
 
 
@@ -93,6 +94,7 @@ void function_testing(){
   relative_turn(45,50,false);
   pros::delay(2000);
   regular_turn(-45,50,false);
+  
 
 }
 // . . .
@@ -123,20 +125,59 @@ void Two_Ring_Corner_Clear_Auto_BLUE(){
   
 }
 void goal_rush(){
+  drive_forward(1.67,127,true);
+  chassis.pid_wait_until(0.8*tile_length);
+  intake_on();
+  chassis.pid_wait_until(tile_length*1.35);
+  intake_off();
+  sweeper.set_value(true);
+  chassis.pid_wait();
+  drive_backward(0.65,120,true);
+  chassis.pid_wait();
+  sweeper.set_value(false);
+  /*relative_turn(165,100,true);
+  chassis.pid_wait();
+  drive_backward(0.25, 50, true);
+  chassis.pid_wait();
+  clamp_mogo();
+  intake_on();
+  pros::delay(300);
+  drive_backward(tile_length*0.25, 10, true);
+  chassis.pid_wait();
+  relative_turn(164,100, true);
+  chassis.pid_wait();
+  drive_backward(0.525, 50, true);
+  chassis.pid_wait();
+  mogo_clamp.set_value(true);
+  intake1.move(127);
+  pros::delay(350);
+  drive_forward(0.55, 75, true);
+  chassis.pid_wait_until(tile_length*0.5);
+  mogo_clamp.set_value(false);
+  pros::delay(500);
+  relative_turn(-68, 100, true);
+  chassis.pid_wait();
+  drive_backward(1, 90, true);
+  chassis.pid_wait();
+  clamp_mogo();
+  chassis.pid_wait_until(0.5);
+  unclamp_mogo();
+  relative_turn(90, 100, true);
+  chassis.pid_wait();*/
+
 
 }
 
 
 
-void corner_clear(){
+void full_goal_auto(){
   
   
 
 
 }
 void solo_winpoint(){
-  chassis.pid_drive_set(-0.7*tile_length,100,true);
-  chassis.pid_wait();
+  drive_forward(-0.5, 100,true);
   chassis.pid_turn_relative_set(89,100,true);
   chassis.pid_wait();
   chassis.pid_drive_set(-0.37*tile_length,100,true);

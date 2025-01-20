@@ -81,32 +81,32 @@ while(true){
 }*/
 int ladyBrownBoolCounter=0;
 
-void ladyBrownVariableCount(){
+/*void ladyBrownVariableCount(){
     if (ladyBrownBoolCounter==0){
         moveArmToPosition(0.0);
     }
 
     if (ladyBrownBoolCounter==1){
-        moveArmToPosition(2583);
+        moveArmToPosition(2600);
     }
 
-    /*if (ladyBrownBoolCounter==2){
+    if (ladyBrownBoolCounter==2){
         
         moveArmToPosition(13500.0);
         pros::delay(50);
         
-    }*/
+    }
 
     if (ladyBrownBoolCounter>1){
         ladyBrownBoolCounter=0;
         moveArmToPosition(0.0);
 
     if (ldb_sensor.get_position()>2583){
-      ladyBrownBoolCounter=0;
+      ladyBrownBoolCounter=1;
       moveArmToPosition(0.0);
     }
     }
-}
+}*/
 
 
 
@@ -134,12 +134,13 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+      Auton("Pos Goal Rush",goal_rush),
       Auton("RED LEFT(4 RING)",Four_ring_auto_red_side),
       Auton("BLUE RIGHT(4 RING)",Four_ring_auto_blue_side),
       Auton("3 RING + WALLSTAKE", three_ring_and_wallstake),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
-      Auton("Pos Goal Rush",goal_rush),
+      Auton("Full Goal Auto",full_goal_auto),
   });
 
   // Initialize chassis and auton selector
@@ -147,9 +148,7 @@ void initialize() {
   ez::as::initialize();
   master.rumble(".");
 
-  /*liftPID.exit_condition_set(80, 50, 300, 150, 500, 500);
-  ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);*/
+
  
   
 }
@@ -229,8 +228,8 @@ void opcontrol() {
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
   chassis.drive_brake_set(driver_preference_brake);
-  ldb_motor1.set_brake_mode(MOTOR_BRAKE_HOLD);
-  ldb_motor2.set_brake_mode(MOTOR_BRAKE_HOLD);
+  ldb_motor1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  ldb_motor2.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
   while (true) {
     // PID Tuner
@@ -307,12 +306,12 @@ void opcontrol() {
         } */
   
    if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      ldb_motor1.move(127);
-      ldb_motor2.move(127);
+      ldb_motor1.move(120);
+      ldb_motor2.move(120);
       
     } else if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      ldb_motor1.move(-127);
-      ldb_motor2.move(-127);
+      ldb_motor1.move(-120);
+      ldb_motor2.move(-120);
       
     } else{
       ldb_motor1.move(0);
@@ -320,9 +319,10 @@ void opcontrol() {
       
     }
 
-     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
-            ladyBrownVariableCount();
-            ladyBrownBoolCounter++;
+     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+            /*ladyBrownVariableCount();
+            ladyBrownBoolCounter++;*/
+            moveArmToPosition(2153);
 
            // moveArmToPosition(9000);
 
