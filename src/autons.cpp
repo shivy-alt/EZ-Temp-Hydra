@@ -248,7 +248,7 @@ void auto_skills(){
     pros::delay(500);
     ldb_motor1.move(127);
     ldb_motor2.move(127);
-    intake_reverse()
+    intake_reverse();
     chassis.pid_turn_relative_set(135,100,true);
     chassis.pid_wait();
     chassis.pid_drive_set(0.9*tile_length,100,true);
