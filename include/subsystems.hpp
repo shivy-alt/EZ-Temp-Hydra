@@ -2,6 +2,7 @@
 
 
 #include "EZ-Template/PID.hpp"
+#include "EZ-Template/piston.hpp"
 #include "EZ-Template/util.hpp"
 #include "api.h"
 #include "pros/misc.hpp"
@@ -16,12 +17,15 @@
 // inline pros::Motor intake(1);
 // inline pros::adi::DigitalIn limit_switch('A');
 inline pros::Motor intake1(20,pros::MotorGearset::blue);
-inline pros::adi::DigitalOut mogo_clamp(2);
+//inline pros::adi::DigitalOut mogo_clamp(2);
 inline pros::Controller control(pros::E_CONTROLLER_MASTER);
 inline pros::adi::DigitalOut sweeper(1);
+inline pros::adi::DigitalOut mogo_clamp(2);
 
 inline pros::Rotation ldb_sensor(9);
-inline pros::Motor ldb_motor1(-10); 
+inline pros::Motor ldb_motor1(-10);
+
+
 
 
 
@@ -49,7 +53,7 @@ inline void ldb_wait() {
     }
 }
 
-inline const float Kp=1.4;   // const float Kp=0.5;
+inline const float Kp=2.7;   // const float Kp=0.5;
 inline const float Ki=0.01;  // const float Ki=0.01; 
 inline const float Kd=3;   // const float Kd=0.1;
 
@@ -60,8 +64,8 @@ inline void moveArmToPosition(int targetPosition){
 int error= 0, lastError=0;
 int integral=0;
 int derivative=0;
-ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
 while(true){
     int currentPosition = ldb_sensor.get_position();
