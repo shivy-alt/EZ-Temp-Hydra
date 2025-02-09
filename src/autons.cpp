@@ -54,9 +54,6 @@ void default_constants() {
   chassis.slew_drive_constants_set(7_in, 80);
 }
 
-///
-// Drive Example
-///
 void corner_clear_func(){
   sweeper.set_value(true);
   chassis.pid_turn_relative_set(45,120,true);
@@ -83,8 +80,6 @@ void regular_turn(int target, int turn_speed, bool turn_slew){
   chassis.pid_wait();
 }
 
-
-
 void function_testing(){
   drive_forward(1.2, 50, false);
   pros::delay(2000);
@@ -95,9 +90,7 @@ void function_testing(){
   regular_turn(-45,50,false);
 
 }
-// . . .
-// Make your own autonomous functions here!
-// . . .
+
 void Four_ring_auto_red_side(){
   drive_backward(1.2, 100, true);
   clamp_mogo();
@@ -108,32 +101,28 @@ void Four_ring_auto_red_side(){
   intake_off();
   drive_backward(0.5, 100, true);
 
-  
-
-
 }
 
 void Four_ring_auto_blue_side(){
 
 }
+
 void three_ring_and_wallstake(){
   
 }
+
 void Two_Ring_Corner_Clear_Auto_BLUE(){
   
 }
+
 void goal_rush(){
 
 }
 
-
-
 void corner_clear(){
-  
-  
-
 
 }
+
 void solo_winpoint(){
 //   chassis.pid_drive_set(-0.7*tile_length,100,true);
 //   chassis.pid_wait();
@@ -184,7 +173,6 @@ void solo_winpoint(){
 //   chassis.pid_drive_set(-0.5*tile_length,100,true);
 //   chassis.pid_wait();
 }
-
 
 void auto_skills(){
   //scoring preload onto alliance stake
