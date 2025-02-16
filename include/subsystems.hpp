@@ -53,7 +53,7 @@ inline void ldb_wait() {
     }
 }
 
-inline const float Kp=2.7;   // const float Kp=0.5;
+inline const float Kp=3.5;   // const float Kp=0.5;
 inline const float Ki=0.01;  // const float Ki=0.01; 
 inline const float Kd=3;   // const float Kd=0.1;
 
@@ -64,8 +64,8 @@ inline void moveArmToPosition(int targetPosition){
 int error= 0, lastError=0;
 int integral=0;
 int derivative=0;
-ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+ldb_motor1.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+ldb_motor2.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 while(true){
     int currentPosition = ldb_sensor.get_position();
