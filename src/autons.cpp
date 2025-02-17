@@ -54,6 +54,9 @@ void default_constants() {
 
   chassis.slew_drive_constants_set(7_in, 80);
 }
+void wait(){
+  chassis.pid_wait();
+}
 
 void corner_clear_func(){
   sweeper.set_value(true);
@@ -118,37 +121,54 @@ void Four_ring_auto_blue_side(){
 
 }
 void five_ring(){
-  drive_backward(1.1,70,true);
+  drive_forward(0.35, 127, true);
   chassis.pid_wait();
-  pros::delay(50);
-  drive_backward(0.45, 50, true);
+  move_ldb(127, 300);
+  pros::delay(150);
+  pros::delay(20);
+  move_ldb(0,50);
+  drive_backward(0.5, 127, true);
   chassis.pid_wait();
+  relative_turn(20, 127,true);
+  wait();
+  drive_backward(1, 70, true);
+  chassis.pid_wait_until(0.5);
+  move_ldb(-127, 300);
+  chassis.pid_wait_until(0.75);
+  move_ldb(0,50);
+  wait();
+  drive_backward(0.3,50, true);
+  wait();
   clamp_mogo();
-  regular_turn(90, 100, true);
-  pros::delay(10);
   intake_on();
-  drive_forward(1, 100,true),fwd==true;
-  chassis.pid_wait();
+  relative_turn(105, 100, true);
+  wait();
+  drive_forward(0.83, 120, true);
+  wait();
   pros::delay(200);
-  drive_backward(1, 50, true);
-  chassis.pid_wait();
-  relative_turn(45, 100,true);
-  chassis.pid_wait();
-  drive_forward(0.95,100,true);
-  chassis.pid_wait();
-  pros::delay(400);
-  drive_backward(0.25,100,true);
-  chassis.pid_wait();
-  relative_turn(-25, 100, true);
-  chassis.pid_wait();
-  drive_forward(0.65,100,true);
-  chassis.pid_wait();
-  drive_backward(0.25,100,true);
-  chassis.pid_wait();
-  relative_turn(170, 100,true);
-  chassis.pid_wait();
-  drive_forward(1,100,true);
-  chassis.pid_wait();
+  drive_backward(0.83, 120, true);
+  wait();
+  relative_turn(45,100,true);
+  wait();
+  drive_forward(0.87, 100,true);
+  wait();
+  relative_turn(-43,100,true);
+  wait();
+  drive_forward(0.87, 100,true);
+  wait();
+  pros::delay(500);
+  relative_turn(10,100,true);
+  wait();
+  drive_backward(0.87, 100, true);
+  wait();
+  relative_turn(167, 100, true);
+  wait();
+  drive_forward(0.85,100,true);
+  wait();
+
+
+
+
   
   
   /*move_ldb(-120);

@@ -257,8 +257,9 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
   static bool  mogo_bool= false;
-   static bool hang_bool = false;
-   static bool sweeper_bool = false;
+  static bool hang_bool = false;
+  static bool sweeper_bool = false
+;  
     // . . .
     // Put more user control code here!
     // . . .
@@ -278,24 +279,22 @@ void opcontrol() {
       mogo_clamp.set_value(mogo_bool);
    
     }
-    
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
       hang_bool=!hang_bool;
-      
-      
+    
     }
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){
-      sweeper_bool=!sweeper_bool;
-      sweeper.set_value(sweeper_bool);
-    }
+
+    
+   
+    
   
    if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      ldb_motor1.move(120);
-      ldb_motor2.move(120);
+      ldb_motor1.move(127);
+      ldb_motor2.move(127);
       
     } else if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      ldb_motor1.move(-120);
-      ldb_motor2.move(-120);
+      ldb_motor1.move(-127);
+      ldb_motor2.move(-127);
       
     } else{
       ldb_motor1.move(0);
