@@ -55,9 +55,6 @@ void default_constants() {
   chassis.slew_drive_constants_set(7_in, 80);
 }
 
-///
-// Drive Example
-///
 void corner_clear_func(){
   sweeper.set_value(true);
   chassis.pid_turn_relative_set(45,120,true);
@@ -104,9 +101,7 @@ void function_testing(){
   
 
 }
-// . . .
-// Make your own autonomous functions here!
-// . . .
+
 void Four_ring_auto_red_side(){
   drive_backward(1.2, 100, true);
   clamp_mogo();
@@ -116,9 +111,6 @@ void Four_ring_auto_red_side(){
   pros::delay(500);
   intake_off();
   drive_backward(0.5, 100, true);
-
-  
-
 
 }
 
@@ -185,6 +177,7 @@ void five_ring(){
 void Two_Ring_Corner_Clear_Auto_BLUE(){
   
 }
+
 void goal_rush(){
   intake_on();
   drive_forward(1.65,127,true);
@@ -268,6 +261,7 @@ void full_goal_auto(){
 
 
 }
+
 void solo_winpoint(){
 
 
