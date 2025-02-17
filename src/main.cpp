@@ -30,7 +30,7 @@ ez::Drive chassis(
     {-19, 11, -12},     // Left Chassis Ports (negative port will reverse it!)
     {5, 7, -6},  // Right Chassis Ports (negative port will reverse it!)
 
-    16,      // IMU Port
+    15,      // IMU Port
     2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     450);   // Wheel RPM
 
@@ -322,8 +322,7 @@ void opcontrol() {
      if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
             /*ladyBrownVariableCount();
             ladyBrownBoolCounter++;*/
-            moveArmToPosition(2153);
-
+            //moveArmToPosition(2153);
            // moveArmToPosition(9000);
 
           }
