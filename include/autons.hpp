@@ -15,4 +15,5 @@ void auto_skills();
 void corner_clear();
 void solo_winpoint();
 void goal_rush();
-void three_ring_and_wallstake();
+void five_ring();
+void full_goal_auto();
