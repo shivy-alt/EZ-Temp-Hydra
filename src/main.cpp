@@ -121,7 +121,7 @@ void initialize() {
   pros::delay(500);  // Stop the user from doing anything while legacy ports configure
 
   // Configure your chassis controls
-  chassis.opcontrol_curve_buttons_toggle(true);  // Enables modifying the controller curve with buttons on the joysticks
+  chassis.opcontrol_curve_buttons_toggle(false);  // Enables modifying the controller curve with buttons on the joysticks
   chassis.opcontrol_drive_activebrake_set(0);    // Sets the active brake kP. We recommend ~2.  0 will disable.
   chassis.opcontrol_curve_default_set(0, 0);     // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
 
@@ -134,10 +134,10 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+    Auton("5 RING", five_ring),
       Auton("Pos Goal Rush",goal_rush),
       Auton("RED LEFT(4 RING)",Four_ring_auto_red_side),
       Auton("BLUE RIGHT(4 RING)",Four_ring_auto_blue_side),
-      Auton("3 RING + WALLSTAKE", three_ring_and_wallstake),
       Auton("Auton Skills",auto_skills),
       Auton("Solo Winpoint", solo_winpoint),
       Auton("Full Goal Auto",full_goal_auto),
@@ -228,8 +228,8 @@ void opcontrol() {
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
   chassis.drive_brake_set(driver_preference_brake);
-  ldb_motor1.set_brake_mode(MOTOR_BRAKE_BRAKE);
-  ldb_motor2.set_brake_mode(MOTOR_BRAKE_BRAKE);
+  ldb_motor1.set_brake_mode(MOTOR_BRAKE_HOLD);
+  ldb_motor2.set_brake_mode(MOTOR_BRAKE_HOLD);
 
   while (true) {
     // PID Tuner
@@ -256,7 +256,10 @@ void opcontrol() {
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
-
+  static bool  mogo_bool= false;
+  static bool hang_bool = false;
+  static bool sweeper_bool = false
+;  
     // . . .
     // Put more user control code here!
     // . . .
@@ -270,48 +273,28 @@ void opcontrol() {
       intake1.move(0);
       
     }
-   static bool  mogo_bool= false;
-   static bool hang_bool = false;
-   static bool sweeper_bool = false;
     
     if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)){
       mogo_bool=!mogo_bool;
       mogo_clamp.set_value(mogo_bool);
    
     }
-    
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
+    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
       hang_bool=!hang_bool;
-      
-      
-    }
-    if(control.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){
-      sweeper_bool=!sweeper_bool;
-      sweeper.set_value(sweeper_bool);
+    
     }
 
-    /*if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) { 
-      liftPID.target_set(20); // Grab ring
-        }
-        //scoring
-    else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
-      liftPID.target_set(16000);  //scoring
-        } 
-        //tipping
-    else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
-      liftPID.target_set(25000);  // hold up
-        } 
-    else if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
-      liftPID.target_set(0); // reset to 0
-        } */
+    
+   
+    
   
    if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      ldb_motor1.move(120);
-      ldb_motor2.move(120);
+      ldb_motor1.move(127);
+      ldb_motor2.move(127);
       
     } else if(control.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-      ldb_motor1.move(-120);
-      ldb_motor2.move(-120);
+      ldb_motor1.move(-127);
+      ldb_motor2.move(-127);
       
     } else{
       ldb_motor1.move(0);
@@ -319,10 +302,14 @@ void opcontrol() {
       
     }
 
-     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
             /*ladyBrownVariableCount();
             ladyBrownBoolCounter++;*/
             //moveArmToPosition(2153);
+            moveArmToPosition(2850);
+            pros::delay(10);
+            moveArmToPosition(2851);
+
            // moveArmToPosition(9000);
 
           }
