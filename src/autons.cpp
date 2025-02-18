@@ -355,7 +355,7 @@ void auto_skills(){
   chassis.pid_wait();
   pros::delay(500);
   mogo_clamp.set_value(true);
-  pros::delay(250);          
+  pros::delay(250);
 
   //scoring ring #1 into mogo #1
   chassis.pid_turn_relative_set(145,115,true);
@@ -364,28 +364,34 @@ void auto_skills(){
   chassis.pid_drive_set(1.55*tile_length,110,true);
   chassis.pid_wait();
 
-  //scoring ring #2 onto mogo #1
-  ldb_motor1.move(127);
-  pros::delay(50);
-  ldb_motor2.move(127);
-  pros::delay(50);
-  chassis.pid_turn_relative_set(-30,100,true);
+  //getting ring #2 and aligning for wall stake
+  chassis.pid_turn_relative_set(-45,100,true);
   chassis.pid_wait();
   pros::delay(100);
-  chassis.pid_drive_set(0.94*tile_length,65,true);
+  chassis.pid_drive_set(1.3*tile_length,65,true);
+  chassis.pid_wait();
+  pros::delay(100);
+  chassis.pid_turn_relative_set(90,100,true);
+  pros::delay(500);
+  moveArmToPosition(2850);
+  pros::delay(10);
+  moveArmToPosition(2851);
   pros::delay(500);
 
   //scoring wall stake
-  chassis.pid_turn_relative_set(30,100,true);
-  chassis.pid_drive_set(0.3*tile_length,100,true);
-  ldb_motor1.move(127);
-  pros::delay(50);
-  ldb_motor2.move(127);
+  chassis.pid_drive_set(0.4*tile_length,100,true);
+  intake_on();
+  chassis.pid_wait();
+  pros::delay(500);
+  chassis.pid_drive_set(0.5*tile_length,100,true);
+  chassis.pid_wait();
+  pros::delay(100);
+  move_ldb(127, 300);
   pros::delay(50);
   chassis.pid_drive_set(-0.6*tile_length,100,true);
-  ldb_motor1.move(-127);
-  ldb_motor2.move(-127);
-  pros::delay(200);
+  move_ldb(-127, 300);
+  chassis.pid_wait();
+  pros::delay(50);
 
   //scoring ring #3 onto mogo #1
   chassis.pid_turn_relative_set(110,120,true);

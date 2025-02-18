@@ -305,7 +305,6 @@ void opcontrol() {
      if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
             /*ladyBrownVariableCount();
             ladyBrownBoolCounter++;*/
-            //moveArmToPosition(2153);
             moveArmToPosition(2850);
             pros::delay(10);
             moveArmToPosition(2851);
